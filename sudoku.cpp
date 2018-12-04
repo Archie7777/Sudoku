@@ -6,8 +6,5 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	int n;
-	scanf("%d", &n);
-	char path[17] = { 'S','u','d','o','k','u','_','f','i','n','a','l','.','t', 'x','t', '\0' };
-	generate(n, path);
+	process_input(argc, argv);
 }

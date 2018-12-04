@@ -13,6 +13,7 @@
 #include <fstream>
 #include <algorithm>
 using namespace std;
+#include "sourse.h"
 
 int sudoku[9][9] = { 0 };
 int used[9] = { 0 };
@@ -51,7 +52,7 @@ void generate(int num, char* path)
 					for (int j = 0; j < 3; j++) {
 						int row = i + a * 3;
 						int line = j + b * 3;
-						sudoku[row][line] = sudoku[(row % 3 + b) % 3][(line % 3 + a) % 3]; //??????????????????
+						sudoku[row][line] = sudoku[(row % 3 + b) % 3][(line % 3 + a) % 3];
 					}
 				}
 			}
