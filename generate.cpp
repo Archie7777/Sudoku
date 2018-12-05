@@ -21,10 +21,21 @@ int putnum = 0;
 
 void generate(int num, char* path)
 {
+	clock_t begin, end;
+	double cost;
+	//开始记录时间
+	begin = clock();
+
 	sudoku[0][0] = (0 + 8) % 9 + 1;
 	used[(0 + 8) % 9 + 1] = 1;
 
-	FILE* file = fopen(path, "w");
+	errno_t err;
+	FILE* file;
+	err = fopen_s(&file, path, "w");
+	if (err != 0) {
+		printf("File not exist!\n");
+		return;
+	}
 
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
@@ -36,7 +47,7 @@ void generate(int num, char* path)
 	srand((unsigned)time(NULL));
 	while (num--)
 	{
-		for (int i = 0; i < 50; i++)
+		for (int i = 0; i < 20; i++)
 		{
 			int a = rand() % 8 + 1;
 			int b = rand() % 8 + 1;
@@ -52,7 +63,7 @@ void generate(int num, char* path)
 					for (int j = 0; j < 3; j++) {
 						int row = i + a * 3;
 						int line = j + b * 3;
-						sudoku[row][line] = sudoku[(row % 3 + b) % 3][(line % 3 + a) % 3];
+						sudoku[row][line] = sudoku[(row + b) % 3][(line + a) % 3];
 					}
 				}
 			}
@@ -65,5 +76,11 @@ void generate(int num, char* path)
 		}
 		fprintf(file, "\n");
 	}
-}
+	fclose(file);
 
+	//结束记录时间
+	end = clock();
+	cost = (double)(end - begin) / CLOCKS_PER_SEC;
+	printf("constant CLOCKS_PER_SEC is: %ld, time cost is: %lf secs", CLOCKS_PER_SEC, cost);
+
+}

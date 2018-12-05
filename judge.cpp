@@ -8,7 +8,7 @@
 #include <cstdio>
 using namespace std;
 
-int jdg_rep(int row, int line, int putnum, int** sudoku)
+int jdg_rep(int row, int line, int putnum, int sudoku[9][9])
 {
 	for (int i = 0; i < 9; i++)
 	{

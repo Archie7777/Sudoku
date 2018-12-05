@@ -2,6 +2,9 @@
 //处理控制台输入
 //输入： 控制台参数
 //输出： true: 处理正确   false：出现错误
+//说明：如果参数是 -c 加数字，则调用generate函数生成指定数量的数独，
+//如果参数是 -s 加路径，则读入路径的文件中的数独谜题，解决后输出到
+//sudoku.txt文件中。
 //*****************************************
 
 #include "pch.h"
@@ -15,11 +18,10 @@
 using namespace std;
 #include "sourse.h"
 
-char path_of_sudoku[17] = { 'S','u','d','o','k','u','_','f','i','n','a','l','.','t', 'x','t', '\0' }; // 要求生成数独路径
+char path_of_sudoku[17] = { "Sudoku_final.txt" };// 要求生成数独路径
 
 int process_input(int argc, char* argv[])
 {
-	
 	if (argv[1][0] == '-')
 	{
 		if (argv[1][1] == 'c') {
@@ -32,7 +34,7 @@ int process_input(int argc, char* argv[])
 			}
 			int weight = 1;
 			int sum = 0; // 输入数字大小
-			for (int i = strlen(argv[2]) - 1; i >= 0; i--)
+			for (int i = (int)strlen(argv[2]) - 1; i >= 0; i--)
 			{
 				sum += weight * (argv[2][i] - '0');
 				weight *= 10;
@@ -41,6 +43,8 @@ int process_input(int argc, char* argv[])
 			return true;
 		}
 		else if (argv[1][1] == 's') {
+			game puzzle(argv[2]);
+			puzzle.read();
 			return true;
 		}
 		else {
