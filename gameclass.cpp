@@ -21,9 +21,11 @@ game::game(char* path)
 	}
 	else {
 		puzzle_path = (char*)malloc(sizeof(char) * (strlen(path) + 1));
-		strcpy_s(puzzle_path, strlen(path) + 1, path);
+		if (puzzle_path != NULL)
+			strcpy_s(puzzle_path, strlen(path) + 1, path);
 	}
-	fclose(file);
+	if (file != NULL)
+		fclose(file);
 }
 
 void game::read()
@@ -34,6 +36,7 @@ void game::read()
 	FILE* writefile;
 	fopen_s(&writefile, "sudoku.txt", "w");
 	int flagtobreak = 0;
+	if (readfile == 0) return;
 	for (int count = 0; ; count++)
 	{
 		char temp;

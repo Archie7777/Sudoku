@@ -7,14 +7,12 @@ int main(int argc, char* argv[])
 {
 	clock_t begin, end;
 	double cost;
-	//开始记录时间
-	begin = clock();
+	begin = clock();//开始记录时间
 
 	process_input(argc, argv);
 
-	//结束记录时间
-	end = clock();
-	cost = (double)(end - begin) / CLOCKS_PER_SEC;
+	end = clock();//结束记录时间
+	cost = (double)end - (double)begin / CLOCKS_PER_SEC;
 	printf("constant CLOCKS_PER_SEC is: %ld, time cost is: %lf secs", CLOCKS_PER_SEC, cost);
 
 }

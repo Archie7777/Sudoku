@@ -26,7 +26,7 @@ void generate(int num, char* path)
 	errno_t err;
 	FILE* file;
 	err = fopen_s(&file, path, "w");
-	if (err != 0) {
+	if (file == 0) {
 		printf("File not exist!\n");
 		return;
 	}

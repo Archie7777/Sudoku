@@ -10,7 +10,7 @@ public:
 	game(char* path);
 	void read();
 private:
-	int sudoku[9][9];
+	int sudoku[9][9] = { 0 };
 	char* puzzle_path;
 	int confirm[9][9];
 	int possible_number[9][9][10]; // -1代表可用，即非零是可用，0代表不可用 ———— 方便初始化
