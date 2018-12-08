@@ -6,7 +6,6 @@
 
 #include "pch.h"
 #include <cstdio>
-#include <iostream>
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
@@ -15,19 +14,14 @@
 using namespace std;
 #include "sourse.h"
 
-int sudoku[9][9] = { 0 };
-int used[9] = { 0 };
+int sudoku[9][9] = {0};
+int answer[9][9][50000];
+int random[10] = { 0 };
 int putnum = 0;
 
 void generate(int num, char* path)
 {
-	clock_t begin, end;
-	double cost;
-	//开始记录时间
-	begin = clock();
-
 	sudoku[0][0] = (0 + 8) % 9 + 1;
-	used[(0 + 8) % 9 + 1] = 1;
 
 	errno_t err;
 	FILE* file;
@@ -36,17 +30,13 @@ void generate(int num, char* path)
 		printf("File not exist!\n");
 		return;
 	}
-
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			if (i == j && j == 0) continue;
-			sudoku[i][j] = i * 3 + j;
-		}
-	}
-
 	srand((unsigned)time(NULL));
 	while (num--)
 	{
+		for (int i = 1; i < 9; i++)
+		{
+			sudoku[i / 3][i % 3] = i;
+		}
 		for (int i = 0; i < 20; i++)
 		{
 			int a = rand() % 8 + 1;
@@ -67,20 +57,17 @@ void generate(int num, char* path)
 					}
 				}
 			}
-		}
+	    }
 
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
-				fprintf(file, "%d%c", sudoku[i][j], j == 8 ? '\n' : ' ');
+				if (num == 0 && i == 8 && j == 8)
+					fprintf(file, "%d", sudoku[i][j]);
+				else
+					fprintf(file, "%d%c", sudoku[i][j], j == 8 ? '\n' : ' ');
 			}
 		}
-		fprintf(file, "\n");
+		if (num) fprintf(file, "\n");
 	}
 	fclose(file);
-
-	//结束记录时间
-	end = clock();
-	cost = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("constant CLOCKS_PER_SEC is: %ld, time cost is: %lf secs", CLOCKS_PER_SEC, cost);
-
 }

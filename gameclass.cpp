@@ -7,6 +7,7 @@
 #include <fstream>
 #include <algorithm>
 #include <stack>
+#include <vector>
 using namespace std;
 #include "sourse.h"
 
@@ -33,10 +34,9 @@ void game::read()
 	FILE* writefile;
 	fopen_s(&writefile, "sudoku.txt", "w");
 	int flagtobreak = 0;
-	while(1) /////////////¸Ä °¡
+	for (int count = 0; ; count++)
 	{
 		char temp;
-		printf("++");
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				int end = fscanf_s(readfile, "%d%c", &sudoku[i][j], &temp, (unsigned int)(sizeof(int) + sizeof(char)));
@@ -45,12 +45,13 @@ void game::read()
 		}
 		if (flagtobreak == 1) break;
 		solve_puzzle();
+		if (count != 0) fprintf(writefile, "\n\n");
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
-				fprintf(writefile, "%d%c", sudoku[i][j], j == 8 ? '\n' : ' ');
+				if (i == 8 && j == 8) fprintf(writefile, "%d", sudoku[i][j]);
+				else fprintf(writefile, "%d%c", sudoku[i][j], j == 8 ? '\n' : ' ');
 			}
 		}
-		fprintf(writefile, "\n");
 	}
 	fclose(readfile);
 	return;
