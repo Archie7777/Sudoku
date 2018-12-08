@@ -16,11 +16,11 @@ game::game(char* path)
 	FILE* file;
 	err = fopen_s(&file, path, "r");
 	if (err != 0) {
-		printf("File not exist!\n");
+		printf("文件不存在\n");
 	}
 	else {
 		puzzle_path = (char*)malloc(sizeof(char) * (strlen(path) + 1));
-		strcpy(puzzle_path, path);
+		strcpy_s(puzzle_path, strlen(path) + 1, path);
 	}
 	fclose(file);
 }
@@ -28,23 +28,31 @@ game::game(char* path)
 void game::read()
 {
 	errno_t err;
-	FILE* file;
-	err = fopen_s(&file, puzzle_path, "r");
+	FILE* readfile;
+	err = fopen_s(&readfile, puzzle_path, "r");
+	FILE* writefile;
+	fopen_s(&writefile, "sudoku.txt", "w");
 	int flagtobreak = 0;
-	for (int i = 0; i < 1; i++) /////////////改 啊
+	while(1) /////////////改 啊
 	{
 		char temp;
+		printf("++");
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
-				int end = fscanf(file, "%d%c", &sudoku[i][j], &temp);
+				int end = fscanf_s(readfile, "%d%c", &sudoku[i][j], &temp, (unsigned int)(sizeof(int) + sizeof(char)));
 				if (end == EOF) flagtobreak = 1;
 			}
 		}
-		solve_puzzle();
-		output();
 		if (flagtobreak == 1) break;
+		solve_puzzle();
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				fprintf(writefile, "%d%c", sudoku[i][j], j == 8 ? '\n' : ' ');
+			}
+		}
+		fprintf(writefile, "\n");
 	}
-	fclose(file);
+	fclose(readfile);
 	return;
 }
 
@@ -151,17 +159,12 @@ void game::fillnum(int row, int line, int putnum)
 	sudoku[row][line] = putnum;
 }
 
-void game::output()
-{
-	printf("output\n");
-	errno_t err;
-	FILE* file;
-	err = fopen_s(&file, "sudoku.txt", "w");
-	for (int i = 0; i < 9; i++) {
-		for (int j = 0; j < 9; j++){
-			fprintf(file, "%d%c", sudoku[i][j], j == 8 ? '\n' : ' ');
-		}
-	}
-	fprintf(file, "\n");
-	fclose(file);
-}
+//void game::output(FILE* file)
+//{
+//	for (int i = 0; i < 9; i++) {
+//		for (int j = 0; j < 9; j++){
+//			fprintf(file, "%d%c", sudoku[i][j], j == 8 ? '\n' : ' ');
+//		}
+//	}
+//	fprintf(file, "\n");
+//}

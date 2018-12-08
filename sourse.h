@@ -14,8 +14,7 @@ private:
 	char* puzzle_path;
 	int confirm[9][9];
 	int possible_number[9][9][10]; // -1代表可用，即非零是可用，0代表不可用 ———— 方便初始化
-	//int number_of_not_possible_num[9][9];
 	void solve_puzzle();
-	void output();
+	//void output(FILE*);
 	void fillnum(int row, int line, int putnum);
 };
