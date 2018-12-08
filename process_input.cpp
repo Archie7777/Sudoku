@@ -33,7 +33,7 @@ int process_input(int argc, char* argv[])
 				}
 			}
 			int weight = 1;
-			int sum = 0; // 输入数字大小
+			int sum = 0; // 输入的数字大小
 			for (int i = (int)strlen(argv[2]) - 1; i >= 0; i--)
 			{
 				sum += weight * (argv[2][i] - '0');
@@ -44,7 +44,7 @@ int process_input(int argc, char* argv[])
 		}
 		else if (argv[1][1] == 's') {
 			game puzzle(argv[2]);
-			puzzle.read();
+			puzzle.solution();
 			return true;
 		}
 		else {

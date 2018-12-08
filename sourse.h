@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+using namespace std;
 
 void generate(int num, char* path);
 int process_input(int argc, char* argv[]);
@@ -8,13 +10,11 @@ class game
 {
 public:
 	game(char* path);
-	void read();
+	void solution();
 private:
 	int sudoku[9][9] = { 0 };
 	char* puzzle_path;
-	int confirm[9][9];
-	int possible_number[9][9][10]; // -1代表可用，即非零是可用，0代表不可用 ———— 方便初始化
-	void solve_puzzle();
-	//void output(FILE*);
-	void fillnum(int row, int line, int putnum);
+	vector <pair <int, int>> vec;
+	int get_index(int num);
+	int dfs(int now);
 };

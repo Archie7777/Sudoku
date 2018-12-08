@@ -15,8 +15,6 @@ using namespace std;
 #include "sourse.h"
 
 int sudoku[9][9] = {0};
-int answer[9][9][50000];
-int random[10] = { 0 };
 int putnum = 0;
 
 void generate(int num, char* path)
