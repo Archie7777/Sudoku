@@ -56,14 +56,11 @@ void generate(int num, char* path)
 				}
 			}
 	    }
-
 		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				if (num == 0 && i == 8 && j == 8)
-					fprintf(file, "%d", sudoku[i][j]);
-				else
-					fprintf(file, "%d%c", sudoku[i][j], j == 8 ? '\n' : ' ');
-			}
+			if (num == 0 && i == 8) 
+				fprintf(file, "%d %d %d %d %d %d %d %d", sudoku[i][0], sudoku[i][1], sudoku[i][2], sudoku[i][3], sudoku[i][4], sudoku[i][5], sudoku[i][6], sudoku[i][7]);
+			else 
+				fprintf(file, "%d %d %d %d %d %d %d %d\n", sudoku[i][0], sudoku[i][1], sudoku[i][2], sudoku[i][3], sudoku[i][4], sudoku[i][5], sudoku[i][6], sudoku[i][7]);
 		}
 		if (num) fprintf(file, "\n");
 	}
